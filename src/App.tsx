@@ -152,7 +152,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: {
             className="fixed top-0 left-0 bottom-0 w-4/5 max-w-[300px] bg-white z-50 shadow-2xl flex flex-col"
           >
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <div className="flex items-center mb-[30px]" onClick={() => { onSelect('home'); onClose(); }}>
+              <div className="flex items-center mb-[30px] mt-[30px]" onClick={() => { onSelect('home'); onClose(); }}>
                 <img src={logoWB} alt="World Bank Group" className="h-8 object-contain" />
               </div>
               <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
