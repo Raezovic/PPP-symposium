@@ -38,6 +38,95 @@ const IconMap: Record<string, any> = {
 
 // --- Components ---
 
+const Welcome = ({ onEnter }: { onEnter: () => void }) => {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-brand/40 flex items-center justify-center p-6 overflow-hidden relative">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-10 right-10 w-72 h-72 bg-brand/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+      </div>
+
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        className="relative z-10 text-center max-w-md"
+      >
+        {/* Logo */}
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.6 }}
+          className="mb-8 flex justify-center"
+        >
+          <div className="w-20 h-20 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-2xl">
+            <img src={logoWB} alt="World Bank Group" className="h-10 object-contain" />
+          </div>
+        </motion.div>
+
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-4xl md:text-5xl font-display font-bold text-white mb-4 leading-tight"
+        >
+          Kenya PPP Symposium
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-lg text-white/80 mb-3 font-light"
+        >
+          May 12, 2026
+        </motion.p>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="text-white/70 text-base mb-10 leading-relaxed"
+        >
+          Private Sector Focused Symposium hosted by The National Treasury
+        </motion.p>
+
+        {/* CTA Button */}
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.6 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={onEnter}
+          className="relative w-full bg-gradient-to-r from-brand to-cyan-400 text-slate-900 py-4 px-8 rounded-2xl font-bold text-lg shadow-2xl shadow-brand/40 backdrop-blur-xl border border-white/20 overflow-hidden group"
+        >
+          <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <span className="relative flex items-center justify-center gap-2">
+            Explore the Event
+            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+          </span>
+        </motion.button>
+
+        {/* Decorative Bottom */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.8 }}
+          className="mt-12 text-white/40 text-xs uppercase tracking-widest font-semibold"
+        >
+          Private Sector Engagement
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+
 const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: { 
   isOpen: boolean; 
   onClose: () => void; 
@@ -182,6 +271,7 @@ const AgendaCard = ({ item }: AgendaCardProps) => {
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
   const isDarkBackdropSection = activeSection === 'home';
 
   // Scroll to top when changing section
@@ -616,7 +706,11 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 overflow-x-hidden">
+    <>
+      {!hasSeenWelcome ? (
+        <Welcome onEnter={() => setHasSeenWelcome(true)} />
+      ) : (
+        <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       <button
         onClick={() => setIsSidebarOpen(true)}
         className={`fixed top-16 left-5 z-30 w-14 h-14 rounded-full backdrop-blur-xl shadow-lg flex items-center justify-center active:scale-95 transition-transform ${
@@ -671,6 +765,8 @@ export default function App() {
           </button>
         </motion.div>
       )}
-    </div>
+        </div>
+      )}
+    </>
   );
 }
