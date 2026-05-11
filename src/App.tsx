@@ -71,7 +71,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-4 pt-7 pb-6 no-scrollbar">
+            <nav className="flex-1 overflow-y-auto px-4 pt-14 pb-6 no-scrollbar">
               <div className="space-y-1">
                 {NAV_ITEMS.map((item) => {
                   const Icon = IconMap[item.icon];
@@ -619,7 +619,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       <button
         onClick={() => setIsSidebarOpen(true)}
-        className={`fixed top-9 left-5 z-30 w-14 h-14 rounded-full backdrop-blur-xl shadow-lg flex items-center justify-center active:scale-95 transition-transform ${
+        className={`fixed top-16 left-5 z-30 w-14 h-14 rounded-full backdrop-blur-xl shadow-lg flex items-center justify-center active:scale-95 transition-transform ${
           isDarkBackdropSection
             ? 'bg-white/20 border border-white/35 shadow-black/20'
             : 'bg-white/80 border border-slate-200/80 shadow-slate-300/40'
