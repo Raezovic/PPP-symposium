@@ -1,0 +1,15 @@
+{
+  "short_name": "PPP Kenya",
+  "name": "Kenya PPP Symposium",
+  "icons": [
+    {
+      "src": "/images/WordlBankIcon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#00ADE4",
+  "background_color": "#f8fafc"
+}
