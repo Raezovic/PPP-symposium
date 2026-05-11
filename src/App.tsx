@@ -23,10 +23,11 @@ import {
   ChevronRight,
   Clock,
   ArrowRight,
-  Globe
+  Globe,
+  Search
 } from 'lucide-react';
-import { NAV_ITEMS, AGENDA_DATA, EVENT_INFO, SPONSORS } from './constants';
-import { AgendaItem } from './types';
+import { NAV_ITEMS, AGENDA_DATA, EVENT_INFO, SPONSORS, SPEAKERS_DATA } from './constants';
+import { AgendaItem, SpeakerProfile } from './types';
 
 const logoWB = '/images/WorldBank.png';
 const logoPPPD = '/images/GovernmentPPP.jpeg';
@@ -265,13 +266,64 @@ const AgendaCard = ({ item }: AgendaCardProps) => {
   );
 };
 
+const SpeakerCard = ({
+  speaker,
+  onSelect,
+}: {
+  speaker: SpeakerProfile;
+  onSelect: (speaker: SpeakerProfile) => void;
+}) => {
+  return (
+    <button
+      onClick={() => onSelect(speaker)}
+      className="text-left bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden active:scale-[0.98] transition-transform"
+    >
+      <div className="aspect-[4/5] bg-slate-100">
+        <img src={speaker.image} alt={speaker.name} className="w-full h-full object-cover" />
+      </div>
+      <div className="p-3">
+        <h3 className="font-display font-bold text-[15px] leading-tight text-slate-900">{speaker.name}</h3>
+        <p className="text-slate-500 text-xs mt-1 line-clamp-2">{speaker.role}</p>
+      </div>
+    </button>
+  );
+};
+
 // --- Main App ---
 
 export default function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [hasSeenWelcome, setHasSeenWelcome] = useState(false);
+  const [agendaSearch, setAgendaSearch] = useState('');
+  const [speakerSearch, setSpeakerSearch] = useState('');
+  const [selectedSpeaker, setSelectedSpeaker] = useState<SpeakerProfile | null>(null);
   const isDarkBackdropSection = activeSection === 'home';
+
+  const normalizedAgendaSearch = agendaSearch.trim().toLowerCase();
+  const normalizedSpeakerSearch = speakerSearch.trim().toLowerCase();
+
+  const filteredAgenda = AGENDA_DATA.filter((item) => {
+    if (!normalizedAgendaSearch) {
+      return true;
+    }
+
+    return [item.title, item.speaker ?? '', item.location, item.description, item.time]
+      .join(' ')
+      .toLowerCase()
+      .includes(normalizedAgendaSearch);
+  });
+
+  const filteredSpeakers = SPEAKERS_DATA.filter((speaker) => {
+    if (!normalizedSpeakerSearch) {
+      return true;
+    }
+
+    return [speaker.name, speaker.title, speaker.role, speaker.session, speaker.time, speaker.bio]
+      .join(' ')
+      .toLowerCase()
+      .includes(normalizedSpeakerSearch);
+  });
 
   // Scroll to top when changing section
   useEffect(() => {
@@ -339,21 +391,22 @@ export default function App() {
               </div>
             </section>
 
-            {/* Speaker Placeholder */}
+            {/* Featured Speakers */}
             <section className="px-6">
-              <h2 className="font-display font-bold text-xl mb-4">Featured Speakers</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="font-display font-bold text-xl">Featured Speakers</h2>
+                <button
+                  onClick={() => setActiveSection('speakers')}
+                  className="text-brand text-sm font-bold flex items-center gap-1"
+                >
+                  See all <ChevronRight size={16} />
+                </button>
+              </div>
               <div className="grid grid-cols-2 gap-4">
-                {[1, 2].map((i) => (
-                  <div key={i} className="aspect-[4/5] bg-slate-100 rounded-3xl border-2 border-dashed border-slate-200 flex flex-col items-center justify-center p-6 text-center">
-                    <div className="w-16 h-16 rounded-full bg-slate-200 mb-3" />
-                    <div className="w-20 h-2 bg-slate-200 rounded-full mb-2" />
-                    <div className="w-12 h-1.5 bg-slate-200 rounded-full" />
-                  </div>
+                {SPEAKERS_DATA.slice(0, 6).map((speaker) => (
+                  <SpeakerCard key={speaker.id} speaker={speaker} onSelect={setSelectedSpeaker} />
                 ))}
               </div>
-              <p className="text-center text-slate-400 text-xs mt-4 italic">
-                The speaker lineup will be announced soon.
-              </p>
             </section>
 
             {/* Sponsor Section */}
@@ -384,6 +437,19 @@ export default function App() {
               <h1 className="font-display font-bold text-2xl mb-2">Symposium Agenda</h1>
               <p className="text-slate-500">One-day intensive focused on Private Sector Engagement.</p>
             </div>
+
+            <section className="mb-6">
+              <div className="relative">
+                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={agendaSearch}
+                  onChange={(event) => setAgendaSearch(event.target.value)}
+                  placeholder="Search agenda by session, speaker, time, or keyword"
+                  className="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-200 bg-white text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-brand/30"
+                />
+              </div>
+            </section>
             
             <div className="sticky top-28 z-10 bg-slate-50/80 backdrop-blur-md py-3 mb-6 border-b border-slate-200">
                <div className="flex gap-4">
@@ -398,15 +464,55 @@ export default function App() {
               <div className="absolute left-0 top-2 bottom-0 w-0.5 bg-slate-200 ml-1" />
               
               <div className="space-y-8">
-                {AGENDA_DATA.map((item) => (
+                {filteredAgenda.map((item) => (
                   <div key={item.id} className="relative">
                     {/* Circle Anchor */}
                     <div className="absolute -left-6 top-6 w-3 h-3 rounded-full bg-white border-2 border-brand z-10" />
                     <AgendaCard item={item} />
                   </div>
                 ))}
+                {filteredAgenda.length === 0 && (
+                  <div className="bg-white rounded-2xl border border-slate-100 p-6 text-center text-slate-500 text-sm">
+                    No agenda items matched your search.
+                  </div>
+                )}
               </div>
             </div>
+          </div>
+        );
+
+      case 'speakers':
+        return (
+          <div className="px-6 pt-32 pb-16">
+            <div className="mb-8">
+              <h1 className="font-display font-bold text-2xl mb-2">Speakers</h1>
+              <p className="text-slate-500 text-sm">Select any speaker to view profile, session, and speaking time.</p>
+            </div>
+
+            <section className="mb-6">
+              <div className="relative">
+                <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                  type="text"
+                  value={speakerSearch}
+                  onChange={(event) => setSpeakerSearch(event.target.value)}
+                  placeholder="Search speakers by name, role, session, or institution"
+                  className="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-200 bg-white text-slate-700 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-brand/30"
+                />
+              </div>
+            </section>
+
+            <section className="grid grid-cols-2 gap-4">
+              {filteredSpeakers.map((speaker) => (
+                <SpeakerCard key={speaker.id} speaker={speaker} onSelect={setSelectedSpeaker} />
+              ))}
+            </section>
+
+            {filteredSpeakers.length === 0 && (
+              <div className="mt-6 bg-white rounded-2xl border border-slate-100 p-6 text-center text-slate-500 text-sm">
+                No speakers matched your search.
+              </div>
+            )}
           </div>
         );
 
@@ -779,6 +885,65 @@ export default function App() {
           </button>
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {selectedSpeaker && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedSpeaker(null)}
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
+            />
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 24, stiffness: 220 }}
+              className="fixed inset-x-0 bottom-0 z-[70] bg-white rounded-t-3xl shadow-2xl max-h-[84vh] overflow-y-auto"
+            >
+              <div className="sticky top-0 bg-white/90 backdrop-blur-md border-b border-slate-100 px-6 py-4 flex items-center justify-between">
+                <h2 className="font-display font-bold text-lg text-slate-900">Speaker Profile</h2>
+                <button onClick={() => setSelectedSpeaker(null)} className="p-2 rounded-full bg-slate-100 text-slate-500">
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="px-6 py-6 space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="w-20 h-20 rounded-2xl overflow-hidden bg-slate-100 flex-shrink-0">
+                    <img src={selectedSpeaker.image} alt={selectedSpeaker.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h3 className="font-display font-bold text-slate-900 text-xl leading-tight">{selectedSpeaker.name}</h3>
+                    <p className="text-slate-600 text-sm mt-1 leading-relaxed">{selectedSpeaker.title}</p>
+                    <span className="inline-flex mt-2 px-3 py-1 rounded-full bg-brand/10 text-brand text-xs font-semibold">
+                      {selectedSpeaker.role}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 rounded-2xl border border-slate-100 p-4 space-y-3">
+                  <div>
+                    <p className="text-[11px] uppercase tracking-widest text-slate-400 font-bold mb-1">Session</p>
+                    <p className="text-slate-800 font-semibold leading-snug">{selectedSpeaker.session}</p>
+                  </div>
+                  <div>
+                    <p className="text-[11px] uppercase tracking-widest text-slate-400 font-bold mb-1">Time</p>
+                    <p className="text-slate-700 font-medium">{selectedSpeaker.time}</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="text-[11px] uppercase tracking-widest text-slate-400 font-bold mb-2">About and Contribution</p>
+                  <p className="text-slate-600 text-[14px] leading-relaxed">{selectedSpeaker.bio}</p>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
         </div>
       )}
     </>

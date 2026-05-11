@@ -19,3 +19,14 @@ export interface NavItem {
   icon: string;
   href: string;
 }
+
+export interface SpeakerProfile {
+  id: string;
+  name: string;
+  title: string;
+  role: string;
+  session: string;
+  time: string;
+  image: string;
+  bio: string;
+}
