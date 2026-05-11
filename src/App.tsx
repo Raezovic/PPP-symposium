@@ -71,7 +71,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-4 pt-3 pb-6 no-scrollbar">
+            <nav className="flex-1 overflow-y-auto px-4 pt-7 pb-6 no-scrollbar">
               <div className="space-y-1">
                 {NAV_ITEMS.map((item) => {
                   const Icon = IconMap[item.icon];
@@ -195,7 +195,7 @@ export default function App() {
         return (
           <div className="space-y-8 pb-12">
             {/* Hero Section */}
-            <section className="relative h-[320px] overflow-hidden">
+            <section className="relative h-[335px] overflow-hidden">
               <img 
                 src="/images/homepageimage.jpeg" 
                 alt="Event Banner" 
@@ -218,7 +218,7 @@ export default function App() {
             </section>
 
             {/* Quick Overview */}
-            <section className="px-6">
+            <section className="px-6 text-center">
               <p className="text-slate-600 leading-relaxed text-[15px]">
                 {EVENT_INFO.description}
               </p>
@@ -292,7 +292,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-12">
             <div className="mb-8">
-              <h1 className="font-display font-bold text-3xl mb-2">Symposium Agenda</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Symposium Agenda</h1>
               <p className="text-slate-500">One-day intensive focused on Private Sector Engagement.</p>
             </div>
             
@@ -379,7 +379,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-16">
             <div className="mb-8">
-              <h1 className="font-display font-bold text-3xl mb-2">Frequently Asked Questions</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Frequently Asked Questions</h1>
               <p className="text-slate-500 text-sm">Everything you need to know before attending the PPP Symposium.</p>
             </div>
 
@@ -452,7 +452,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-16 space-y-8">
             <section>
-              <h1 className="font-display font-bold text-3xl mb-2">Venue</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Venue</h1>
               <p className="text-slate-500 text-sm">Event location and on-site details for attendees.</p>
             </section>
 
@@ -485,7 +485,6 @@ export default function App() {
                 {[
                   'Please arrive within the registration window for smooth check-in.',
                   'Breakfast is served during registration before opening sessions.',
-                  'Carry a valid ID and confirmation details for verification at the venue desk.',
                 ].map((note) => (
                   <li key={note} className="flex items-start gap-3 text-slate-600 text-[14px] leading-relaxed">
                     <span className="w-1.5 h-1.5 rounded-full bg-brand mt-2.5 flex-shrink-0" />
@@ -501,7 +500,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-16 space-y-6">
             <section>
-              <h1 className="font-display font-bold text-3xl mb-2">Emergency Contacts</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Emergency Contacts</h1>
               <p className="text-slate-500 text-sm">Tap any phone button below to call directly.</p>
             </section>
 
@@ -528,12 +527,6 @@ export default function App() {
                   phone: '+254 729 017311',
                   dial: '+254729017311',
                 },
-                {
-                  name: 'Winfred Marubu',
-                  email: 'projectmanager1@stawiexperiences.com',
-                  phone: '+254 716 320612',
-                  dial: '+254716320612',
-                },
               ].map((contact) => (
                 <div key={contact.name} className="bg-white rounded-2xl border border-slate-100 shadow-sm p-5">
                   <h3 className="font-display font-bold text-slate-900 text-lg mb-1">{contact.name}</h3>
@@ -557,7 +550,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-16 space-y-6">
             <section>
-              <h1 className="font-display font-bold text-3xl mb-2">Feedback</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Feedback</h1>
               <p className="text-slate-500 text-sm">Share your feedback about the PPP Symposium through the embedded form below.</p>
             </section>
 
@@ -576,7 +569,7 @@ export default function App() {
         return (
           <div className="px-6 pt-24 pb-16 space-y-6">
             <section>
-              <h1 className="font-display font-bold text-3xl mb-2">Event Photos</h1>
+              <h1 className="font-display font-bold text-2xl mb-2">Event Photos</h1>
               <p className="text-slate-500 text-sm">Official event photos will be posted on Pixieset.</p>
             </section>
 
@@ -626,7 +619,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 overflow-x-hidden">
       <button
         onClick={() => setIsSidebarOpen(true)}
-        className={`fixed top-5 left-5 z-30 w-14 h-14 rounded-full backdrop-blur-xl shadow-lg flex items-center justify-center active:scale-95 transition-transform ${
+        className={`fixed top-9 left-5 z-30 w-14 h-14 rounded-full backdrop-blur-xl shadow-lg flex items-center justify-center active:scale-95 transition-transform ${
           isDarkBackdropSection
             ? 'bg-white/20 border border-white/35 shadow-black/20'
             : 'bg-white/80 border border-slate-200/80 shadow-slate-300/40'
