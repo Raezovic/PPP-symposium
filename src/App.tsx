@@ -40,12 +40,13 @@ const IconMap: Record<string, any> = {
 
 const Welcome = ({ onEnter }: { onEnter: () => void }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-brand/40 flex items-center justify-center p-6 overflow-hidden relative">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 right-10 w-72 h-72 bg-brand/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen flex items-center justify-center p-6 overflow-hidden relative">
+      <img
+        src="/images/homepageimage.jpeg"
+        alt="Welcome background"
+        className="absolute inset-0 w-full h-full object-cover blur-md scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900/55 via-slate-800/35 to-brand/30" />
 
       {/* Content */}
       <motion.div
@@ -61,9 +62,7 @@ const Welcome = ({ onEnter }: { onEnter: () => void }) => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-8 flex justify-center"
         >
-          <div className="w-20 h-20 rounded-2xl backdrop-blur-xl bg-white/10 border border-white/20 flex items-center justify-center shadow-2xl">
-            <img src={logoWB} alt="World Bank Group" className="h-10 object-contain" />
-          </div>
+          <img src={logoWB} alt="World Bank Group" className="w-full max-w-[280px] h-auto object-contain drop-shadow-2xl" />
         </motion.div>
 
         {/* Title */}
@@ -73,7 +72,7 @@ const Welcome = ({ onEnter }: { onEnter: () => void }) => {
           transition={{ delay: 0.3, duration: 0.6 }}
           className="text-4xl md:text-5xl font-display font-bold text-white mb-4 leading-tight"
         >
-          Kenya PPP Symposium
+          Welcome to Kenya PPP Symposium
         </motion.h1>
 
         {/* Subtitle */}
@@ -108,7 +107,7 @@ const Welcome = ({ onEnter }: { onEnter: () => void }) => {
         >
           <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
           <span className="relative flex items-center justify-center gap-2">
-            Explore the Event
+            Let's Get Started
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </span>
         </motion.button>
@@ -152,7 +151,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: {
             className="fixed top-0 left-0 bottom-0 w-4/5 max-w-[300px] bg-white z-50 shadow-2xl flex flex-col"
           >
             <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <div className="flex items-center mb-[30px] mt-[30px]" onClick={() => { onSelect('home'); onClose(); }}>
+              <div className="flex items-center mb-[12px] mt-[30px]" onClick={() => { onSelect('home'); onClose(); }}>
                 <img src={logoWB} alt="World Bank Group" className="h-8 object-contain" />
               </div>
               <button onClick={onClose} className="p-2 text-slate-400 hover:text-slate-600 transition-colors">
@@ -160,7 +159,7 @@ const Sidebar = ({ isOpen, onClose, activeSection, onSelect }: {
               </button>
             </div>
 
-            <nav className="flex-1 overflow-y-auto px-4 pt-9 pb-6 no-scrollbar">
+            <nav className="flex-1 overflow-y-auto px-4 pt-1 pb-6 no-scrollbar">
               <div className="space-y-1">
                 {NAV_ITEMS.map((item) => {
                   const Icon = IconMap[item.icon];
@@ -380,13 +379,13 @@ export default function App() {
 
       case 'agenda':
         return (
-          <div className="px-6 pt-24 pb-12">
+          <div className="px-6 pt-32 pb-12">
             <div className="mb-8">
               <h1 className="font-display font-bold text-2xl mb-2">Symposium Agenda</h1>
               <p className="text-slate-500">One-day intensive focused on Private Sector Engagement.</p>
             </div>
             
-            <div className="sticky top-20 z-10 bg-slate-50/80 backdrop-blur-md py-3 mb-6 border-b border-slate-200">
+            <div className="sticky top-28 z-10 bg-slate-50/80 backdrop-blur-md py-3 mb-6 border-b border-slate-200">
                <div className="flex gap-4">
                   <div className="bg-brand text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-md">
                     Monday, May 12
@@ -413,7 +412,7 @@ export default function App() {
 
       case 'about':
         return (
-          <div className="px-6 pt-24 pb-12 space-y-10">
+          <div className="px-6 pt-32 pb-12 space-y-10">
             <section>
               <h1 className="font-display font-bold text-2xl mb-4 text-brand">{EVENT_INFO.title}</h1>
               <p className="text-slate-400 text-sm font-medium uppercase tracking-widest mb-6">About the Symposium</p>
@@ -467,7 +466,7 @@ export default function App() {
 
       case 'faqs':
         return (
-          <div className="px-6 pt-24 pb-16">
+          <div className="px-6 pt-32 pb-16">
             <div className="mb-8">
               <h1 className="font-display font-bold text-2xl mb-2">Frequently Asked Questions</h1>
               <p className="text-slate-500 text-sm">Everything you need to know before attending the PPP Symposium.</p>
@@ -540,7 +539,7 @@ export default function App() {
 
       case 'venue':
         return (
-          <div className="px-6 pt-24 pb-16 space-y-8">
+          <div className="px-6 pt-32 pb-16 space-y-8">
             <section>
               <h1 className="font-display font-bold text-2xl mb-2">Venue</h1>
               <p className="text-slate-500 text-sm">Event location and on-site details for attendees.</p>
@@ -588,7 +587,7 @@ export default function App() {
 
       case 'contact':
         return (
-          <div className="px-6 pt-24 pb-16 space-y-6">
+          <div className="px-6 pt-32 pb-16 space-y-6">
             <section>
               <h1 className="font-display font-bold text-2xl mb-2">Emergency Contacts</h1>
               <p className="text-slate-500 text-sm">Tap any phone button below to call directly.</p>
@@ -638,7 +637,7 @@ export default function App() {
 
       case 'feedback':
         return (
-          <div className="px-6 pt-24 pb-16 space-y-6">
+          <div className="px-6 pt-32 pb-16 space-y-6">
             <section>
               <h1 className="font-display font-bold text-2xl mb-2">Feedback</h1>
               <p className="text-slate-500 text-sm">Share your feedback about the PPP Symposium through the embedded form below.</p>
@@ -657,7 +656,7 @@ export default function App() {
 
       case 'event-photos':
         return (
-          <div className="px-6 pt-24 pb-16 space-y-6">
+          <div className="px-6 pt-32 pb-16 space-y-6">
             <section>
               <h1 className="font-display font-bold text-2xl mb-2">Event Photos</h1>
               <p className="text-slate-500 text-sm">Official event photos will be posted on Pixieset.</p>
@@ -749,22 +748,37 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      {/* Bottom Navigation (Quick Action) */}
-      {activeSection === 'home' && (
-        <motion.div 
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20"
-        >
-          <button 
-            onClick={() => setActiveSection('agenda')}
-            className="bg-brand text-white px-8 py-4 rounded-full shadow-2xl flex items-center gap-3 font-bold text-[15px] whitespace-nowrap active:scale-95 transition-transform"
+      {/* Bottom Navigation */}
+      <motion.div 
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        className="fixed bottom-8 left-1/2 -translate-x-1/2 z-20"
+      >
+        <div className="flex items-center gap-3 rounded-full bg-white/90 backdrop-blur-xl border border-slate-200 px-3 py-2 shadow-xl shadow-slate-300/40">
+          <button
+            onClick={() => setActiveSection('home')}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all active:scale-95 ${
+              activeSection === 'home'
+                ? 'bg-brand text-white shadow-md shadow-brand/30'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }`}
+            aria-label="Go to home"
           >
-            <Calendar size={18} />
-            Explore Full Agenda
+            <Home size={24} />
           </button>
-        </motion.div>
-      )}
+          <button
+            onClick={() => setActiveSection('contact')}
+            className={`w-14 h-14 rounded-full flex items-center justify-center transition-all active:scale-95 ${
+              activeSection === 'contact'
+                ? 'bg-brand text-white shadow-md shadow-brand/30'
+                : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }`}
+            aria-label="Go to contact"
+          >
+            <Info size={24} />
+          </button>
+        </div>
+      </motion.div>
         </div>
       )}
     </>
