@@ -30,6 +30,7 @@ import { NAV_ITEMS, AGENDA_DATA, EVENT_INFO, SPONSORS, SPEAKERS_DATA } from './c
 import { AgendaItem, SpeakerProfile } from './types';
 
 const logoWB = '/images/WorldBank.png';
+const welcomeLogo = '/images/WorldBankApp.png';
 const logoPPPD = '/images/GovernmentPPP.jpeg';
 
 // --- Icons Mapping ---
@@ -41,7 +42,7 @@ const IconMap: Record<string, any> = {
 
 const Welcome = ({ onEnter }: { onEnter: () => void }) => {
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 overflow-hidden relative">
+    <div className="min-h-screen flex items-center justify-center p-[39px] overflow-hidden relative">
       <img
         src="/images/homepageimage.jpeg"
         alt="Welcome background"
@@ -63,7 +64,7 @@ const Welcome = ({ onEnter }: { onEnter: () => void }) => {
           transition={{ delay: 0.2, duration: 0.6 }}
           className="mb-8 flex justify-center"
         >
-          <img src={logoWB} alt="World Bank Group" className="w-full max-w-[280px] h-auto object-contain drop-shadow-2xl" />
+          <img src={welcomeLogo} alt="World Bank Group" className="w-full max-w-[280px] h-auto object-contain drop-shadow-2xl" />
         </motion.div>
 
         {/* Title */}
@@ -71,7 +72,7 @@ const Welcome = ({ onEnter }: { onEnter: () => void }) => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-4xl md:text-5xl font-display font-bold text-white mb-4 leading-tight"
+          className="text-3xl md:text-4xl font-display font-bold text-white mb-4 leading-tight"
         >
           Welcome to Kenya PPP Symposium
         </motion.h1>
