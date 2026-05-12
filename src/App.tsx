@@ -777,7 +777,7 @@ export default function App() {
                 <h2 className="font-display font-bold text-xl text-slate-900 mb-2">View Photo Gallery</h2>
                 <p className="text-slate-600 text-sm mb-6">Tap the button below to open the Pixieset gallery for this event.</p>
                 <a
-                  href="https://pixieset.com"
+                  href="https://stawi.pixieset.com/pppsymposium2026/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-brand text-white px-6 py-3 rounded-xl font-bold text-sm shadow-lg shadow-brand/20"
